@@ -25,7 +25,7 @@ break_duration_in_seconds = 5 * 60
 update_interval_in_seconds = 1
 
 # Progress Bar
-total_number_of_marks = 10
+total_number_of_marks = 0
 session_full_mark_character = '#'
 break_full_mark_character = '|'
 empty_mark_character = '·'
@@ -178,7 +178,10 @@ def print_output(description, duration_in_seconds, seconds, full_mark_character,
     minutes = get_minutes(seconds)
     output_seconds = get_output_seconds(seconds)
     progress_bar = print_progress_bar(duration_in_seconds, seconds, full_mark_character)
-    output = description + "%s %02d:%02d" % (progress_bar, minutes, output_seconds) + suffix
+    if minutes <= 0:
+        output = description + "%s%02d" % (progress_bar, output_seconds) + suffix
+    else:
+        output = description + "%s%02dm" % (progress_bar, minutes) + suffix
     sys.stdout.write(output+"\n")
 
 def get_minutes(seconds):
